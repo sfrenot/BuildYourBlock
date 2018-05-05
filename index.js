@@ -1,7 +1,12 @@
-const Block = require("./Block");
+const Block = require('./Block');
+const Blockchain = require('./Blockchain');
 
-const first = new Block(null, "First !");
-const second = new Block(first.id, "Second :)");
-const constructif = new Block(second.id, "Vous commencez à voir le principe ?");
+const blockchain = new Blockchain();
 
-console.log([first, second, constructif]);
+blockchain.add(new Block(null, "First !"));
+blockchain.add(new Block(blockchain.last().id, "Second :)"));
+blockchain.add(new Block(blockchain.last().id, "Vous commencez à voir le principe ?"));
+
+console.log("isValid:", blockchain.isValid());
+
+console.log(blockchain);
