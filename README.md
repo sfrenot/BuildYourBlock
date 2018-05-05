@@ -30,3 +30,25 @@ console.log([first, second, constructif]);
 ```
 
 J'ai aussi commencé à écrire un fichier `Block.js` mais je vais laisser le compléter !
+
+Quand c'est fini, dans un terminal placé dans ce dossier : `npm start`. Vous devriez voir quelque chose comme cela :
+
+```Javascript
+[ Block {
+    id: 466991139,
+    previous: 0,
+    data: 'First !',
+    date: 2018-05-05T14:49:29.152Z },
+  Block {
+    id: 349521768,
+    previous: 466991139,
+    data: 'Second :)',
+    date: 2018-05-05T14:49:29.152Z },
+  Block {
+    id: 847041514,
+    previous: 349521768,
+    data: 'Vous commencez à voir le principe ?',
+    date: 2018-05-05T14:49:29.152Z } ]
+```
+
+C'est bon ? Magnifique ! Vous avez une première blockchain ! Bon, par contre, elle est sacrément pas fonctionnelle... Normalement, quand un block est ajouté dans la Blockchain, il n'est plus modifiable. Ici, rien ne vous empêche de modifier ce que vous voulez.
