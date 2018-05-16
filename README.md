@@ -6,6 +6,10 @@ Le code sera en Javascript pour permettre au plus grand nombre de réaliser ce t
 
 Pour écrire ce tutoriel, je me suis inspiré de la suite d'article de Kass sur Medium réaliser avec le langage Java : https://medium.com/programmers-blockchain/create-simple-blockchain-java-tutorial-from-scratch-6eeed3cb03fa.
 
+## Work in progress
+
+Ce tutoriel est en cours d'écriture. Je prévois une première version relue et corrigée pour septembre 2018.
+
 ## Au commencement fut le block
 
 Dans Blockchain, il y a block. Un block est un ensemble d'informations et quand les blocks sont mis bout à bout, ils forment une chaine : la Blockchain !
