@@ -17,7 +17,23 @@ module.exports = class Blockchain {
     }
   }
 
-  isValid() {
+  isValid(difficulty) {
+    const target = "0".repeat(difficulty);
     // Modifier ici.
+    return this.chain.reduce(function(isValid, block, index, array) {
+      if (!isValid) {
+        return isValid;
+      } else if (block.id !== block.getHash()) {
+        return false;
+      } else if (block.id.substr(0, difficulty) !== target) {
+        return false;
+      } else if (index === 0 && block.previous === null) {
+        return true;
+      } else if (block.previous !== array[index - 1].id) {
+        return false;
+      } else {
+        return isValid;
+      }
+    }, true);
   }
 }
