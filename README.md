@@ -37,3 +37,7 @@ Modifier `index.js` pour miner les trois premiers blocks avec une difficulté de
 Modifier la fonction de vérification pour qu'elle vérifie que la difficulté est bien respectée.
 
 Maintenant, votre Blockchain est beaucoup plus difficile à attaquer !
+
+## Suite
+
+Mettre du texte, c'est bien. Échanger de la valeur, c'est mieux : `git checkout etape-3`.
