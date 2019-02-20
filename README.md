@@ -4,7 +4,7 @@ On est en mesure de chainer les blocks et de vérifier que la chaine n'a pas ét
 
 On aimerait maintenant pouvoir échanger de la valeur via cette Blockchain. Pouvoir faire un chèque de la forme : Moi, Jean Dupond transfere 10€ à Dupont Jean. Sous cette forme, il y a plusieurs problèmes : comment gérer les homonymes ? Comment s'assurer que c'est bien Jean qui à signer le chèque ? Comment s'assurer que Jean a bien l'argent ? ...
 
-Pour les deux premières questions, il y a une solution "simple" : un couple de clés publique et privée. Pour la troisième, on va créer notre propre monnaie !
+Pour les deux premières questions, il y a une solution "simple" : un couple de clés publique et privée. Pour la troisième, on va créer notre propre monnaie.
 
 Explications !
 
@@ -70,8 +70,28 @@ On sait produire des transactions, maintenant, pour les sauvegarder, il faut les
 
 Je vous laisse faire ! Modifiez la classe `Block` pour que data soit maintenant une liste de `Transaction`s.
 
+## Photocopie
+
+C'est bon ? Bravo !
+
+Mais en faite, on n'a toujours pas résolu la question de s'assurer que la source à l'argent. Vous ne pouvez pas non plus distinguer deux envois de 1000 BYB. Qu'est qui empêche Dupont Jean d'ajouter indéfiniment votre transaction à la Blockchain ?
+
+Une idée ?
+
+On veux que quelque-chose soit unique ? On a déjà eu ce problème, non ? Quel solution on a utilisé déjà ?
+
+Vous avez trouvé ?
+
+Et si on mettait un id à nos transactions calculé à partir du contenu de celle-ci ? C'est cool ça mais je vois déjà pleins de choses qu'il va falloir vérifier. Il va falloir vérifier que la transaction est unique dans la blockchain, si elle est dans la blockchain, je ne peux pas l'ajouter au block courant.
+
+Autre chose, si je veux faire deux transactions de 1000 BYB à Jean, je ne peux pas quand leur signature sera la même ! Je dois rajouter une autre information comme la date et/ou un nonce.
+
+Bon, je vous laisse implémenter tout ça :D.
+
 ## Suite
 
-C'est bon ? Bravo ! Mais en faite, on n'a toujours pas résolu la question de s'assurer que la source à l'argent. Vous ne pouvez pas non plus distinguer deux envois de 1000 BYB. Qu'est qui empêche Dupont Jean d'ajouter indéfiniment votre transaction à la Blockchain ?
+Vos mains saignent devant tant de code mais ça fonctionne ? Cool ! <Rire sadique> :D
+
+Mais en faite, on n'a toujours pas résolu la question de s'assurer que la source à l'argent. Qu'est qui empêche Dupont Jean d'envoyer tout son argent vers deux personnes différentes en même temps ? Que de questions, que de problèmes.
 
 Pour résoudre tout ça, il va falloir complexifier un peu les transactions. Pas beaucoup mais on va y consacrer l'étape suivante : `git checkout etape-4`.
