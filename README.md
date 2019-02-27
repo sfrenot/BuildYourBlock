@@ -9,7 +9,7 @@ Pour écrire ce tutoriel, je me suis inspiré de la suite d'article de Kass sur 
 ## Cloner ce dépôt
 
 ```Bash
-git clone git@github.com:dreimert/BuildYourBlock.git
+git clone https://github.com/dreimert/BuildYourBlock.git
 cd BuildYourBlock
 ```
 
