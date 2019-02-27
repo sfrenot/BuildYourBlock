@@ -4,6 +4,7 @@ function generateId() {
 
 module.exports = class Block {
   // Complétez le constructeur
-  constructor(previous, data) {
+  constructor(previous, date, data) {
+    // votre code ici
   }
 }
