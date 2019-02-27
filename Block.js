@@ -12,14 +12,14 @@ module.exports = class Block {
 
   getHash() {
     return crypto.createHash('sha256').update(
-      this.previous + this.date + this.data + this.nonce, 'utf8'
+      `${this.previous}${this.date}${this.data}${this.nonce}`, 'utf8'
     ).digest('hex');
   }
 
   miner(difficulty) {
     const target = "0".repeat(difficulty);
 
-    while(this.id.substr(0, difficulty) !== target) {
+    while(!this.id.startsWith(target)) {
       this.nonce++;
       this.id = this.getHash();
     }
