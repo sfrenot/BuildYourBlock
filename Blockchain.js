@@ -19,20 +19,20 @@ module.exports = class Blockchain {
 
   isValid(difficulty) {
     const target = "0".repeat(difficulty);
-    // Modifier ici.
-    return this.chain.reduce(function(isValid, block, index, array) {
+
+    return this.chain.reduce(function(isValid, block, index, chain) {
       if (!isValid) {
-        return isValid;
+        return false;
       } else if (block.id !== block.getHash()) {
         return false;
-      } else if (block.id.substr(0, difficulty) !== target) {
+      } else if (!block.id.startsWith(target)) {
         return false;
       } else if (index === 0 && block.previous === null) {
         return true;
-      } else if (block.previous !== array[index - 1].id) {
+      } else if (block.previous !== chain[index - 1].id) {
         return false;
       } else {
-        return isValid;
+        return true;
       }
     }, true);
   }

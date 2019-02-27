@@ -1,9 +1,9 @@
 const crypto = require('crypto');
 
 module.exports = class Block {
-  constructor(previous, data) {
+  constructor(previous, date, data) {
     this.previous = previous;
-    this.date = new Date();
+    this.date = date;
     this.data = data;
     this.nonce = 0;
 

@@ -1,17 +1,38 @@
 const Block = require('./Block');
 const Blockchain = require('./Blockchain');
 
-const difficulty = 5;
+const DIFFICULTY = 5;
 
 const blockchain = new Blockchain();
 
-blockchain.add(new Block(null, "First !"));
-blockchain.last().miner(difficulty);
-blockchain.add(new Block(blockchain.last().id, "Second :)"));
-blockchain.last().miner(difficulty);
-blockchain.add(new Block(blockchain.last().id, "Vous commencez à voir le principe ?"));
-blockchain.last().miner(difficulty);
+const first = new Block(
+  null,
+  new Date("2019-02-27T08:01:42.000Z"),
+  "First !"
+);
 
-console.log("isValid:", blockchain.isValid(difficulty));
+first.miner(DIFFICULTY)
+
+const second = new Block(
+  first.id,
+  new Date("2019-02-27T10:02:43.000Z"),
+  "Second :)"
+);
+
+second.miner(DIFFICULTY)
+
+const third = new Block(
+  second.id,
+  new Date("2019-02-28T10:03:44.000Z"),
+  "Vous commencez à voir le principe ?"
+);
+
+third.miner(DIFFICULTY)
+
+blockchain.add(first);
+blockchain.add(second);
+blockchain.add(third);
+
+console.log("isValid:", blockchain.isValid(DIFFICULTY));
 
 console.log(blockchain);
