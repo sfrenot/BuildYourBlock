@@ -28,20 +28,22 @@ On a un premier problème, c'est que Node.js ne sais pas générer un couple de 
 
 Vous pouvez maintenant utiliser la bibliothèque pour encrypter et décrypter un message.
 
-    const NodeRSA = require('node-rsa');
-    const key = new NodeRSA({b:2048});
+```Javascript
+const NodeRSA = require('node-rsa');
+const key = new NodeRSA({b:2048});
 
-    const text = 'Hello RSA!';
-    const encrypted = key.encryptPrivate(text, 'base64');
-    console.log('encrypted: ', encrypted);
-    const decrypted = key.decryptPublic(encrypted, 'utf8');
-    console.log('decrypted: ', decrypted);
+const text = 'Hello RSA!';
+const encrypted = key.encryptPrivate(text, 'base64');
+console.log('encrypted: ', encrypted);
+const decrypted = key.decryptPublic(encrypted, 'utf8');
+console.log('decrypted: ', decrypted);
 
-    const msg = "Je transfère 10€ à Jean Dupond"
-    const signature = key.sign(msg)
+const msg = "Je transfère 10€ à Jean Dupond"
+const signature = key.sign(msg)
 
-    console.log("Signature :", signature);
-    console.log("Vérifier :", key.verify(msg, signature));
+console.log("Signature :", signature);
+console.log("Vérifier :", key.verify(msg, signature));
+```
 
 Pour en savoir plus sur comment l'utiliser : https://github.com/rzcoder/node-rsa.
 
