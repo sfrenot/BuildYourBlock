@@ -46,20 +46,20 @@ Quand c'est fini, dans un terminal placé dans ce dossier : `npm start`. Vous de
 
 ```Javascript
 [ Block {
-    id: 466991139,
+    id: 510140110, // peux être diffèrent
     previous: null,
     data: 'First !',
-    date: 2018-05-05T14:49:29.152Z },
+    date: 2019-02-27T08:01:42.000Z },
   Block {
-    id: 349521768,
-    previous: 466991139,
+    id: 515642654,  // peux être diffèrent
+    previous: 510140110,  // peux être diffèrent
     data: 'Second :)',
-    date: 2018-05-05T14:49:29.152Z },
+    date: 2019-02-27T10:02:43.000Z },
   Block {
-    id: 847041514,
-    previous: 349521768,
+    id: 721495421,  // peux être diffèrent
+    previous: 515642654,  // peux être diffèrent
     data: 'Vous commencez à voir le principe ?',
-    date: 2018-05-05T14:49:29.152Z } ]
+    date: 2019-02-28T10:03:44.000Z } ]
 ```
 
 C'est bon ? Magnifique ! Vous avez une première blockchain ! Bon, par contre, elle est sacrément pas fonctionnelle... Normalement, quand un block est ajouté dans la Blockchain, il n'est plus modifiable. Ici, rien ne vous empêche de modifier ce que vous voulez.
@@ -111,27 +111,40 @@ function getHash(data) {
 
 Modifier la class Block pour lui ajouter une fonction getHash qui calcule l'empreinte correspondant au block. Pour calculer cette empreinte, vous devez utiliser l'identifiant du block précédent, la date du block et les données contenu dans le block.
 
-Vous obtenez quelques chose comme ça :
+```Javascript
+const toHash = `${this.previous}${this.data}${this.date}`;
+```
+
+Vous obtenez exactement ça :
 
 ```Javascript
 [ Block {
     previous: null,
-    date: 2018-05-05T16:32:31.508Z,
     data: 'First !',
-    id: '834cde4fafb33b0a4a64470eabef589d3977a38ddaebe8fcdcbe9d9db33a2d8b' },
+    date: 2019-02-27T08:01:42.000Z,
+    id:
+     'a41f8877855bd3d91519bc73a6d77963d7034b8275252a55ee3dd775870f8cac' },
   Block {
-    previous: '834cde4fafb33b0a4a64470eabef589d3977a38ddaebe8fcdcbe9d9db33a2d8b',
-    date: 2018-05-05T16:32:31.510Z,
+    previous:
+     'a41f8877855bd3d91519bc73a6d77963d7034b8275252a55ee3dd775870f8cac',
     data: 'Second :)',
-    id: '9832f23c49b0f2c4304e667d942b75767d5e8341ee29cb0da37a32a09627d396' },
+    date: 2019-02-27T10:02:43.000Z,
+    id:
+     'e5c9f1816fb8bc23f361ae89e91681104b78832fe4aefef3eba8deeb3dbd5d95' },
   Block {
-    previous: '9832f23c49b0f2c4304e667d942b75767d5e8341ee29cb0da37a32a09627d396',
-    date: 2018-05-05T16:32:31.510Z,
+    previous:
+     'e5c9f1816fb8bc23f361ae89e91681104b78832fe4aefef3eba8deeb3dbd5d95',
     data: 'Vous commencez à voir le principe ?',
-    id: 'b9f3db05d7f7c85a254c246b587dad497fe75c65ba51464061c189c7e06deada' } ]
+    date: 2019-02-28T10:03:44.000Z,
+    id:
+     'e78126cef62cd6e82a540a44fb3df71faab249ec4f1893173063aedca589aa03' } ]
 ```
 
-Maintenant, essayez de modifier le premier élément de la chaine, tous les autres sont modifiés !
+###### Que pouvez-vous dire sur l'ordre des champs par rapport à l'affichage précédent ? Pourquoi ?
+
+Maintenant, essayez de modifier le premier élément de la chaine.
+
+###### Comparez. Qu'est-ce qu'il se passe ?
 
 ## Suite
 
