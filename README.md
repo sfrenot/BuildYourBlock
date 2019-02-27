@@ -34,20 +34,22 @@ const key = new NodeRSA({b:2048});
 
 const text = 'Hello RSA!';
 const encrypted = key.encryptPrivate(text, 'base64');
-console.log('encrypted: ', encrypted);
+console.log('encrypted: ', encrypted); // encrypted:  tCJqOKgMNkRrC...
 const decrypted = key.decryptPublic(encrypted, 'utf8');
-console.log('decrypted: ', decrypted);
+console.log('decrypted: ', decrypted); // decrypted:  Hello RSA!
 
 const msg = "Je transfère 10€ à Jean Dupond"
 const signature = key.sign(msg)
 
-console.log("Signature :", signature);
-console.log("Vérifier :", key.verify(msg, signature));
+console.log("Signature :", signature); // Signature : <Buffer c4 3a d3 01 df fc 56 4a 01 8b ... 246 more bytes>
+console.log("Vérifier :", key.verify(msg, signature)); // Vérifier : true
 ```
 
 Pour en savoir plus sur comment l'utiliser : https://github.com/rzcoder/node-rsa.
 
 La clé publique représente ce qu'on appel un wallet. Pour le moment, disons qu'un wallet a un montant, une clé publique et si vous en êtes propriétaire, une clé privée. Il permet aussi au propriétaire de signer des messages et à tout le monde de vérifier la signature. Tout compris ? Vous n'avez plus qu'à compléter le fichier `Wallet.js`.
+
+`npm start` ! `Verify : true` ? Good job !
 
 ## Build Your Block Coin
 
