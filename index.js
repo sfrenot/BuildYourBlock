@@ -1,35 +1,20 @@
-const Block = require('./Block');
-const Blockchain = require('./Blockchain');
-const Wallet = require('./Wallet')
-const Transaction = require('./Transaction')
+const Block = require("./Block");
+const Blockchain = require("./Blockchain");
+const Wallet = require("./Wallet")
+const Transaction = require("./Transaction")
 
 const DIFFICULTY = 5;
 
-const blockchain = new Blockchain();
-
-const first = new Block(
-  null,
-  new Date("2019-02-27T08:01:42.000Z"),
-  "First !"
-);
-
+const first  = new Block(null     , "First !");
 first.miner(DIFFICULTY)
 
-const second = new Block(
-  first.id,
-  new Date("2019-02-27T10:02:43.000Z"),
-  "Second :)"
-);
-
+const second = new Block(first.id , "Second :)");
 second.miner(DIFFICULTY)
 
-const third = new Block(
-  second.id,
-  new Date("2019-02-28T10:03:44.000Z"),
-  "Vous commencez à voir le principe ?"
-);
-
+const third  = new Block(second.id, "Vous commencez à voir le principe ?");
 third.miner(DIFFICULTY)
+
+const blockchain = new Blockchain();
 
 blockchain.add(first);
 blockchain.add(second);

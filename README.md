@@ -32,12 +32,14 @@ Vous pouvez maintenant utiliser la bibliothèque pour encrypter et décrypter un
 const NodeRSA = require('node-rsa');
 const key = new NodeRSA({b:2048});
 
+// Pour votre culture
 const text = 'Hello RSA!';
 const encrypted = key.encryptPrivate(text, 'base64');
 console.log('encrypted: ', encrypted); // encrypted:  tCJqOKgMNkRrC...
 const decrypted = key.decryptPublic(encrypted, 'utf8');
 console.log('decrypted: ', decrypted); // decrypted:  Hello RSA!
 
+// Pour le TP
 const msg = "Je transfère 10€ à Jean Dupond"
 const signature = key.sign(msg)
 
@@ -49,7 +51,7 @@ Pour en savoir plus sur comment l'utiliser : https://github.com/rzcoder/node-rsa
 
 La clé publique représente ce qu'on appel un wallet. Pour le moment, disons qu'un wallet a un montant, une clé publique et si vous en êtes propriétaire, une clé privée. Il permet aussi au propriétaire de signer des messages et à tout le monde de vérifier la signature. Tout compris ? Vous n'avez plus qu'à compléter le fichier `Wallet.js`.
 
-`npm start` ! `Verify : true` ? Good job !
+`node index.js` ! `Verify : true` ? Good job !
 
 ## Build Your Block Coin
 
