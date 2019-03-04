@@ -30,7 +30,8 @@ Vous pouvez maintenant utiliser la bibliothèque pour encrypter et décrypter un
 
 ```Javascript
 const NodeRSA = require('node-rsa');
-const key = new NodeRSA({b:2048});
+const key = new NodeRSA({b:2048}); // Génère une nouvelle clé
+// const key = new NodeRSA("maclé..."); // importe la clé en paramètre
 
 // Pour votre culture
 const text = 'Hello RSA!';
@@ -49,9 +50,11 @@ console.log("Vérifier :", key.verify(msg, signature)); // Vérifier : true
 
 Pour en savoir plus sur comment l'utiliser : https://github.com/rzcoder/node-rsa.
 
-La clé publique représente ce qu'on appel un wallet. Pour le moment, disons qu'un wallet a un montant, une clé publique et si vous en êtes propriétaire, une clé privée. Il permet aussi au propriétaire de signer des messages et à tout le monde de vérifier la signature. Tout compris ? Vous n'avez plus qu'à compléter le fichier `Wallet.js`.
+La clé publique représente ce qu'on appel votre adresse ou un wallet. Pour le moment, disons qu'un wallet a une clé publique et si vous en êtes propriétaire, une clé privée. Il permet aussi au propriétaire de signer des messages et à tout le monde de vérifier la signature. Tout compris ?
 
-`node index.js` ! `Verify : true` ? Good job !
+Regardez `etape-3-wallet.js` et vous n'avez plus qu'à compléter le fichier `Wallet.js`.
+
+    node etape-3-wallet.js
 
 ## Build Your Block Coin
 

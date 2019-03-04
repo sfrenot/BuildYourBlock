@@ -23,13 +23,11 @@ module.exports = class Blockchain {
     return this.chain.reduce(function(isValid, block, index, chain) {
       if (!isValid) {
         return false;
-      } else if (block.id !== block.getHash()) {
+      } else if (!block.isValid(difficulty)) {
         return false;
-      } else if (!block.id.startsWith(target)) {
+      } else if (index === 0 && block.previous !== null) {
         return false;
-      } else if (index === 0 && block.previous === null) {
-        return true;
-      } else if (block.previous !== chain[index - 1].id) {
+      } else if (index !== 0 && block.previous !== chain[index - 1].id) {
         return false;
       } else {
         return true;
