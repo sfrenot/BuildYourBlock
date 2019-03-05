@@ -40,7 +40,9 @@ class TxOut {
 
 // Représente une transaction non dépensées
 class UTxOut {
-  constructor(txOut, index) {
+  // @params tx : un transaction
+  // @params index : index du txOut dans le tableau txOuts de tx
+  constructor(tx, index) {
     // ...
   }
 
