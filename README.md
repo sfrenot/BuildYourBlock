@@ -58,7 +58,7 @@ Regardez `etape-3-wallet.js` et vous n'avez plus qu'à compléter le fichier `Wa
 
 ## Build Your Block Coin
 
-On a maintenant sur solution pour signer, il faut maintenant de l'argent à transférer.
+On a maintenant une solution pour signer, il faut maintenant de l'argent à transférer.
 
 Créons une nouvelle unité, le Build Your Block coin ou BYB. Disons qu'un BYB vaut un centime. Dans ce contexte, que devient la phrase : Moi, Jean Dupond transfère 10€ à Dupont Jean ?
 
