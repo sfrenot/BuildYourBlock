@@ -4,7 +4,8 @@ class Transaction {
   // Construit une transaction envoyant montant à destinataire.
   // Retourne la transaction
   static buildSimpleTransaction(senderWallet, destinataire, montant, uTxOut) {
-
+    // ...
+    return new Transaction(/* ... */);
   }
 
   // @params txIns : un tableau de txIn
@@ -14,9 +15,11 @@ class Transaction {
     txOuts
   ) {
     // ...
+    this.id = ''; // ...
   }
 
   // Vérifie la validité des informations de la transaction
+  // comme la somme des entrées = somme des sorties
   // Retourne un booléen
   verify() {
     // ...
@@ -54,6 +57,7 @@ class TxOut {
 }
 
 // Représente une transaction non dépensées
+// Sert uniquement de base de données
 class UTxOut {
   // @params tx : un transaction
   // @params index : index du txOut dans le tableau txOuts de tx
@@ -62,7 +66,7 @@ class UTxOut {
   }
 
   // Retourne un TxIn
-  toTxInt(wallet) {
+  toTxIn(wallet) {
     // ...
   }
 }
