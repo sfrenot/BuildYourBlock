@@ -69,21 +69,18 @@ C'est une transaction de la forme :
 * source : clé publique de Jean Dupond
 * destination : clé publique de Dupont Jean
 * valeur : 1000 BYB
+
+Et pour signer le chèque :
+
 * signature : source + destination + valeur signé avec la clé privée de Jean Dupond
 
-Facile ! Je vous laisse compléter le fichier Transaction.js alors !
-
-## Mettre des transactions en block
-
-On sait produire des transactions, maintenant, pour les sauvegarder, il faut les mettre dans la blockchain.
-
-Je vous laisse faire ! Modifiez la classe `Block` pour que data soit maintenant une liste de `Transaction`s.
-
-## Photocopie
-
-C'est bon ? Bravo !
+Facile ! Oui mais non.
 
 Mais en fait, on n'a toujours pas résolu la question de s'assurer que la source a l'argent. Vous ne pouvez pas non plus distinguer deux envois de 1000 BYB. Qu'est-ce qui empêche Dupont Jean d'ajouter indéfiniment votre transaction à la Blockchain ?
+
+## Mon précieux !
+
+Comment rendre une transaction unique ?
 
 Une idée ?
 
@@ -91,16 +88,46 @@ On veut que quelque-chose soit unique ? On a déjà eu ce problème, non ? Quell
 
 Vous avez trouvé ?
 
-Et si on mettait un id à nos transactions calculé à partir du contenu de celle-ci ? C'est cool ça, mais je vois déjà plein de choses qu'il va falloir vérifier. Il va falloir vérifier que la transaction est unique dans la blockchain, si elle est dans la blockchain, je ne peux pas l'ajouter au block courant.
+Et si on mettait un id à nos transactions calculé à partir du contenu de celle-ci ? C'est cool ça, mais je vois déjà plein de choses qu'il va falloir vérifier. Il va falloir vérifier que la transaction est unique dans la blockchain, si elle est dans la blockchain, je ne peux pas l'ajouter au block courant. Mais pour ça, il faut avoir toute la blockchain et la parcourir à la recherche de transaction identique. Couteux mais faisable.
 
-Autre chose, si je veux faire deux transactions de 1000 BYB à Jean, je ne peux pas quand leur signature sera la même ! Je dois rajouter une autre information comme la date et/ou un nonce.
+Autre chose, si je veux faire deux transactions de 1000 BYB à Jean, je ne peux pas car leur signature sera la même ! Je dois rajouter une autre information comme la date et/ou un nonce.
 
-Bon, je vous laisse implémenter tout ça :D.
+Une transaction aurait au moins : une source, un destinataire, un montant, un nonce ou date et une signature.
+
+## Ça coule de source
+
+Maintenir l'état des comptes de tout le monde ne me fait pas envie. En plus, j'aimerait pouvoir faire plusieurs choses :
+
+* Ne pas devoir stocker l'intégralité de la blockchain pour valider une transaction.
+* Pouvoir remonter à la source de l'argent.
+* Pouvoir mettre des conditions sur l'utilisation de l'argent.
+
+Pour la dernière, on verra ça plus tard. Pour les deux premières, c'est assez similaire aux blocks : on va chainer les transactions !
+
+Une transaction prendra en entrée une ou plusieurs autres transactions que j'ai reçu et aura une ou plusieurs sorties.
+
+###### Pourquoi ne pas se limiter à une entrée et une sortie ?
+
+Une entrée est un `txIn` et une sortie un `txOut`. Un `txIn` représente la sortie d'une autre transaction. Un `txOut` aura un montant, une destination et une date.
+
+###### Pourquoi cette solution permet de résoudre les deux premiers points ?
+
+Implémentons ! Regardez le fichier `etape-3-transaction.js` et complétez `Transaction.js`.
+
+###### Combien de BYB Alice a avant le transfère à Bob ?
+###### Combien de BYB ont Alice et Bob après le transfère ?
+###### Bis repetita, pourquoi ne pas se limiter à une entrée et une sortie ?
+
+## Mettre des transactions en block
+
+###### Qu'est-ce qu'un arbre de Merkle ?
+
+On sait produire des transactions, maintenant, pour les sauvegarder, il faut les mettre dans la blockchain.
+
+Je vous laisse faire ! Modifiez la classe `Block` pour que data soit maintenant une liste de `Transaction`s.
 
 ## Suite
 
 Vos mains saignent devant tant de code mais ça fonctionne ? Cool ! <Rire sadique> :D
 
-Mais en fait, on n'a toujours pas résolu la question de s'assurer que la source a l'argent. Qu'est-ce qui empêche Dupont Jean d'envoyer tout son argent vers deux personnes différentes en même temps ? Que de questions, que de problèmes.
-
-Pour résoudre tout ça, il va falloir complexifier un peu les transactions. Pas beaucoup mais on va y consacrer l'étape suivante : `git checkout etape-4`.
+Je n'ai pas encore écrit la suite. Vous avez fini ? Alors `git checkout etape-4` et vous écrivez un tuto pour codez un client pair à pair ou bien pour modifier le code pour que les transactions acceptent un script qui permet des conditions comme *attendre 100 blocks avant de dépenser* ou *Il faut la signature de deux personnes pour la dépenser*.

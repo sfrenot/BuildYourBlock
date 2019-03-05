@@ -1,16 +1,48 @@
 const NodeRSA = require('node-rsa');
 
-module.exports = class Transaction {
+class Transaction {
+  static buildSimpleTransaction(senderWallet, destinataire, montant, uTxOut) {
+
+  }
+
   constructor(
-    sourcePublicKey,
-    destinationPublicKey,
-    montant,
-    signature = null
-  ) {}
+    txIns,
+    txOuts
+  ) {
+    // ...
+  }
 
-  sign(privateKey) {}
+  verify() {
+    // ...
+  }
+}
 
-  setSignature(signature) {}
+class TxIn {
+  constructor(TxId, index, signature) {
+    // ...
+  }
+}
 
-  verify() {}
+class TxOut {
+  constructor(montant, destinataire) {
+    // ...
+  }
+}
+
+// Représente une transaction non dépensées
+class UTxOut {
+  constructor(txOut, index) {
+    // ...
+  }
+
+  toTxInt(wallet) {
+    // ...
+  }
+}
+
+module.exports = {
+  Transaction,
+  TxIn,
+  TxOut,
+  UTxOut
 }
