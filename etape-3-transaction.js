@@ -77,8 +77,8 @@ pe2bmp75AoGAMkFL2mO9tiGyYfuw8GnARvI9lShB1sXRkv93xWclnyYgpbjXlrOM
 D5Lkv/sxWLvbFRGVh9nvSAkTpilIxWsIcFvGLk/Q8mEBmjAGltDqBIk=
 -----END RSA PRIVATE KEY-----`;
 
-const walletALICE = new Wallet(PRIVATE_KEY_ALICE);
-const walletB = new Wallet(PRIVATE_KEY_BOB);
+const walletAlice = new Wallet(PRIVATE_KEY_ALICE);
+const walletBob = new Wallet(PRIVATE_KEY_BOB);
 
 // Il faut une transaction pour commencer
 // Nous verrons les diffèrentes solutions pour créer de la monnaie plus tard.
@@ -92,6 +92,6 @@ const uTxOut = [
   new UTxOut(transactionGenesis, 1)
 ]
 
-const maTransaction = Transaction.buildSimpleTransaction(walletA, PUBLIC_KEY_BOB, 1000, uTxOut);
+const maTransaction = Transaction.buildSimpleTransaction(walletAlice, PUBLIC_KEY_BOB, 1000, uTxOut);
 
 console.log("Combien de BYB avez-vous ", maTransaction);

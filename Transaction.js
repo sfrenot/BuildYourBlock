@@ -21,6 +21,11 @@ class Transaction {
   verify() {
     // ...
   }
+
+  // Retourne le hash du Tx : hash des txIns + hash des txOuts
+  getHash() {
+    // ...
+  }
 }
 
 class TxIn {
@@ -30,10 +35,20 @@ class TxIn {
   constructor(tx, index, signature) {
     // ...
   }
+
+  // Retourne le hash du TxIn : tx.getHash() + index + signature
+  getHash() {
+    // ...
+  }
 }
 
 class TxOut {
   constructor(montant, destinataire) {
+    // ...
+  }
+
+  // Retourne le hash du TxOut : montant + destinataire
+  getHash() {
     // ...
   }
 }
