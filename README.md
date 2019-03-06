@@ -2,11 +2,17 @@
 
 On est en mesure de chaîner les blocks et de vérifier que la chaîne n'a pas été modifié.
 
-On aimerait maintenant pouvoir échanger de la valeur via cette Blockchain. Pouvoir faire un chèque de la forme : Moi, Jean Dupond transfère 10€ à Dupont Jean. Sous cette forme, il y a plusieurs problèmes : comment gérer les homonymes ? Comment s'assurer que c'est bien Jean qui a signé le chèque ? Comment s'assurer que Jean a bien l'argent ? ...
+On aimerait maintenant pouvoir échanger de la valeur via cette Blockchain. Pouvoir faire un chèque de la forme : Moi, Jean Dupond transfère 10€ à Dupont Jean. Sous cette forme, il y a plusieurs problèmes : comment gérer les homonymes ? Comment s'assurer que c'est bien Jean qui a signé le chèque ? Comment s'assurer que Jean a bien l'argent ?
 
 Pour les deux premières questions, il y a une solution "simple" : un couple de clés publique et privée. Pour la troisième, on va créer notre propre monnaie.
 
 Explications !
+
+## Objectifs
+
+* Comprendre la notion de couple clé publique/clé privée.
+* Apprendre à manipuler une clé RSA.
+* Comprendre la notion de transaction.
 
 ## Une histoire de couple
 
@@ -26,7 +32,7 @@ On a un premier problème, c'est que Node.js ne sait pas générer un couple de 
 
     npm install node-rsa
 
-Vous pouvez maintenant utiliser la bibliothèque pour encrypter et décrypter un message.
+Vous pouvez maintenant utiliser la bibliothèque pour encrypter et décrypter un message mais aussi pour le signer et vérifier la signature.
 
 ```Javascript
 const NodeRSA = require('node-rsa');
