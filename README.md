@@ -80,6 +80,19 @@ Et pour signer le chèque :
 
 * signature : source + destination + valeur signé avec la clé privée de Jean Dupond
 
+     Transaction 1
+    +------------------------------------------------------+
+    |                                                      |
+    | source: <Jean public key>                            |
+    | destination: <Dupont public key>                     |
+    | value: 1000                                          |
+    |                                                      |
+    +------------------------------------------------------+
+    |                                                      |
+    | signature: <Jean.sign(source + destination + value)> |
+    |                                                      |
+    +------------------------------------------------------+
+
 Facile ! Oui mais non.
 
 Mais en fait, on n'a toujours pas résolu la question de s'assurer que la source a l'argent. Vous ne pouvez pas non plus distinguer deux envois de 1000 BYB. Qu'est-ce qui empêche Dupont Jean d'ajouter indéfiniment votre transaction à la Blockchain ?
@@ -100,6 +113,23 @@ Autre chose, si je veux faire deux transactions de 1000 BYB à Jean, je ne peux 
 
 Une transaction aurait au moins : une source, un destinataire, un montant, un nonce ou date et une signature.
 
+     Transaction 2
+    +--------------------------------------------------+
+    |                                                  |
+    | id: <hash(source + destination + value + nonce)> |
+    | source: <Jean public key>                        |
+    | destination: <Dupont public key>                 |
+    | value: 1000                                      |
+    | nonce: <exemple: 21>                             |
+    |                                                  |
+    +--------------------------------------------------+
+    |                                                  |
+    | signature: <Jean.sign(id)>                       |
+    |                                                  |
+    +--------------------------------------------------+
+
+Pour que cette solution fonctionne, il faut que je maintienne le solde de tous les comptes des utilisateurs.
+
 ## Ça coule de source
 
 Maintenir l'état des comptes de tout le monde ne me fait pas envie. En plus, j'aimerait pouvoir faire plusieurs choses :
@@ -112,11 +142,84 @@ Pour la dernière, on verra ça plus tard. Pour les deux premières, c'est assez
 
 Une transaction prendra en entrée une ou plusieurs autres transactions que j'ai reçu et aura une ou plusieurs sorties.
 
+     Transaction
+    +-----------------------------+
+    |                             |
+    | id: <sha(inputs + outputs)> |
+    | inputs: []                  |
+    | outputs: []                 |
+    |                             |
+    +-----------------------------+
+
 ###### Pourquoi ne pas se limiter à une entrée et une sortie ?
 
-Une entrée est un `txIn` et une sortie un `txOut`. Un `txIn` représente la sortie d'une autre transaction. Un `txOut` aura un montant, une destination et une date.
+Une entrée est un `Input`. Un `Input` représente la sortie d'une transaction précédente, elle contient une référence à la transaction et l'index de la sortie. Elle est aussi la preuve que la personne à le droit d'utiliser la sortie, elle contient la signature du destinataire de la sortie référencée.
+
+     Input
+    +-----------------------------+
+    |                             |
+    | tx: <ref une transaction>   |
+    | index: <index de la sortie> |
+    | hash: <hash(tx.id + index)> |
+    | signature: <sign(hash)>     |
+    |                             |
+    +-----------------------------+
+
+Une sortie un `Output`. Un `Output` aura un montant et un destinataire. Les deux ont un hash permettant de vérifier leur contenu.
+
+     Output
+     +-----------------------------------------+
+     |                                         |
+     | montant: <exemple: 1000>                |
+     | destinataire: <public key destinataire> |
+     | hash: <hash(montant + destinataire)>    |
+     |                                         |
+     +-----------------------------------------+
+
+Une sortie qui n'est pas utilisée comme entrée représente votre argent disponible.
 
 ###### Pourquoi cette solution permet de résoudre les deux premiers points ?
+
+     Transaction 0                                   Transaction 1
+    +----------------------------------------+      +-------------------------------------------+
+    |                                        |      |                                           |
+    | id: < Exemple: 1654823783 > <-------------+   | id: <sha(inputs + outputs)>               |
+    | inputs: []                             |  |   | inputs: [                                 |
+    | outputs:  ]                            |  |   |                                           |
+    |                                        |  |   |   Input                                   |
+    |   Output                               |  |   |  +--------------------------------------+ |
+    |  +-----------------------------------+ |  |   |  |                                      | |
+    |  |                                   | |  +------+ tx: < Exemple: 1654823783 >          | |
+    |  | montant: 5000                     +<----------+ index: 0                             | |
+    |  | destinataire: <public key Alice > | |      |  | signature: <destinataire.sign(hash)> | |
+    |  |     ^                             | |      |  |                +                     | |
+    |  +-----------------------------------+ |      |  +--------------------------------------+ |
+    |        |                               |      |                   |                       |
+    | ]      +----------------------------------------------------------+                       |
+    |                                        |      | ]                                         |
+    +----------------------------------------+      |                                           |
+                                                    | outputs: [                                |
+                                                    |                                           |
+                                                    |    Output                                 |
+                                                    |   +-----------------------------------+   |
+                                                    |   |                                   |   |
+                                                    |   | montant: 1000                     |   |
+                                                    |   | destinataire: <public key Bob >   |   |
+                                                    |   |                                   |   |
+                                                    |   +-----------------------------------+   |
+                                                    |                                           |
+                                                    |    Output                                 |
+                                                    |   +-----------------------------------+   |
+                                                    |   |                                   |   |
+                                                    |   | montant: 4000                     |   |
+                                                    |   | destinataire: <public key Alice > |   |
+                                                    |   |     ^                             |   |
+                                                    |   +-----+-----------------------------+   |
+                                                    |                                           |
+                                                    | ]                                         |
+                                                    |                                           |
+                                                    +-------------------------------------------+
+
 
 Implémentons ! Regardez le fichier `etape-3-transaction.js` et complétez `Transaction.js`.
 
@@ -126,14 +229,24 @@ Implémentons ! Regardez le fichier `etape-3-transaction.js` et complétez `Tran
 
 ## Mettre des transactions en block
 
-###### Qu'est-ce qu'un arbre de Merkle ?
-
 On sait produire des transactions, maintenant, pour les sauvegarder, il faut les mettre dans la blockchain.
 
 Je vous laisse faire ! Modifiez la classe `Block` pour que data soit maintenant une liste de `Transaction`s.
+
+## Fait tourner la planche à billets
+
+###### Comment peut-on créer de l'argent ?
+
+La solution de Bitcoin est de créer de la monnaie à chaque block. Le première transaction de chaque block est une transaction sans Input mais avec une sortie.
+
+Implémentez cette mécanique pour que chaque nouveau block crée 50 BYB.
 
 ## Suite
 
 Vos mains saignent devant tant de code mais ça fonctionne ? Cool ! <Rire sadique> :D
 
 Je n'ai pas encore écrit la suite. Vous avez fini ? Alors `git checkout etape-4` et vous écrivez un tuto pour codez un client pair à pair ou bien pour modifier le code pour que les transactions acceptent un script qui permet des conditions comme *attendre 100 blocks avant de dépenser* ou *Il faut la signature de deux personnes pour la dépenser*.
+
+## Questions cultures
+
+###### Qu'est-ce qu'un arbre de Merkle ?

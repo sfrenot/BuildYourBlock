@@ -1,79 +1,88 @@
 const NodeRSA = require('node-rsa');
 
+function calcUnspentOutputsForMontant(montant, unspentOutputs, myPublicKey) {
+  let unspentOutputsForMontant = [];
+  let valueUnspentOutputsForMontant = 0;
+
+  for (let i = 0; i < unspentOutputs.length; i++) {
+    const unspentOutput = unspentOutputs[i];
+    const output = unspentOutput.tx.outputs[unspentOutput.index];
+
+    if(output.destinataire === publicKey) {
+      unspentOutputsForMontant.push(unspentOutput);
+      valueUnspentOutputsForMontant += output.montant;
+
+      if (valueUnspentOutputsForMontant >= montant) {
+        return unspentOutputsForMontant;
+      } else {
+        continue;
+      }
+    } else {
+      continue;
+    }
+  }
+
+  // Quand on n'a pas assez d'argent, on lance une exception
+  throw new Error("Vous n'avez pas assez.");
+}
+
+// Représente une transaction ou un chèque.
+// Souvent abrégé en tx quand passé en variable.
 class Transaction {
   // Construit une transaction envoyant montant à destinataire.
   // Retourne la transaction
-  static buildSimpleTransaction(senderWallet, destinataire, montant, uTxOut) {
+  static buildSimpleTransaction(senderWallet, destinataire, montant, unspentOutputs) {
+
+    const unspentOutputsForMontant = calcUnspentOutputsForMontant(/* ... */);
     // ...
+
     return new Transaction(/* ... */);
   }
 
-  // @params txIns : un tableau de txIn
-  // @params txOuts : un tableau de txOut
+  // @params inputs : un tableau de Input
+  // @params outputs : un tableau de Output
   constructor(
-    txIns,
-    txOuts
+    inputs,
+    outputs
   ) {
     // ...
     this.id = ''; // ...
   }
 
-  // Vérifie la validité des informations de la transaction
-  // comme la somme des entrées = somme des sorties
-  // Retourne un booléen
-  verify() {
-    // ...
-  }
-
-  // Retourne le hash du Tx : hash des txIns + hash des txOuts
+  // Retourne le hash du Tx : hash des inputs + hash des outputs
   getHash() {
+    const hashInputs = this.inputs.map((input) => {return input.hash;}).join('');
     // ...
   }
 }
 
-class TxIn {
-  // @params tx : transaction dans laquelle est le txOut que j'utilise
-  // @params index : index du txOut dans la transaction
-  // @params signature : signature du destinataire du txOut
+class Input {
+  // @params tx : transaction dans laquelle est le Output que j'utilise
+  // @params index : index du Output dans le outputs de la transaction
+  // @params signature : signature du destinataire du Output
   constructor(tx, index, signature) {
     // ...
   }
 
-  // Retourne le hash du TxIn : tx.getHash() + index + signature
+  // Retourne le hash du Input : tx.id + index + signature
   getHash() {
     // ...
   }
 }
 
-class TxOut {
+class Output {
   constructor(montant, destinataire) {
     // ...
   }
 
-  // Retourne le hash du TxOut : montant + destinataire
+  // Retourne le hash du Output : montant + destinataire
   getHash() {
-    // ...
-  }
-}
-
-// Représente une transaction non dépensées
-// Sert uniquement de base de données
-class UTxOut {
-  // @params tx : un transaction
-  // @params index : index du txOut dans le tableau txOuts de tx
-  constructor(tx, index) {
-    // ...
-  }
-
-  // Retourne un TxIn
-  toTxIn(wallet) {
     // ...
   }
 }
 
 module.exports = {
   Transaction,
-  TxIn,
-  TxOut,
-  UTxOut
+  Input,
+  Output
 }
