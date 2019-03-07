@@ -1,2 +1,2 @@
 require('./etape-3-transaction');
-require('./etape-3-wallet');
+require('./etape-3-rsa');
