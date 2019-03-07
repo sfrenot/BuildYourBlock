@@ -5,6 +5,7 @@ module.exports = class Wallet {
   // https://github.com/rzcoder/node-rsa#load-key-from-pem-string
   constructor(key) {
     // Complétez le constructeur
+    // Si vous avez la clé privée, node-rsa est capable de calculer la clé publique.
   }
 
   // Retourne un booléen à true si l'on a la clé privée

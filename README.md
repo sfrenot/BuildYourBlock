@@ -39,14 +39,6 @@ const NodeRSA = require('node-rsa');
 const key = new NodeRSA({b:2048}); // Génère une nouvelle clé
 // const key = new NodeRSA("maclé..."); // importe la clé en paramètre
 
-// Pour votre culture
-const text = 'Hello RSA!';
-const encrypted = key.encryptPrivate(text, 'base64');
-console.log('encrypted: ', encrypted); // encrypted:  tCJqOKgMNkRrC...
-const decrypted = key.decryptPublic(encrypted, 'utf8');
-console.log('decrypted: ', decrypted); // decrypted:  Hello RSA!
-
-// Pour le TP
 const msg = "Je transfère 10€ à Jean Dupond"
 const signature = key.sign(msg)
 

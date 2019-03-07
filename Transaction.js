@@ -1,4 +1,5 @@
 const NodeRSA = require('node-rsa');
+const crypto = require('crypto');
 
 function calcUnspentOutputsForMontant(montant, unspentOutputs, myPublicKey) {
   let unspentOutputsForMontant = [];
@@ -60,11 +61,16 @@ class Input {
   // @params tx : transaction dans laquelle est le Output que j'utilise
   // @params index : index du Output dans le outputs de la transaction
   // @params signature : signature du destinataire du Output
-  constructor(tx, index, signature) {
+  constructor(tx, index, signature = undefined) {
     // ...
   }
 
-  // Retourne le hash du Input : tx.id + index + signature
+  // Calcule la signature
+  sign(wallet) {
+    this.signature = "/* ... */";
+  }
+
+  // Retourne le hash du Input : tx.id + index
   getHash() {
     // ...
   }
