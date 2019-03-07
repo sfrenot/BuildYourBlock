@@ -80,6 +80,8 @@ Et pour signer le chèque :
 
 * signature : source + destination + valeur signé avec la clé privée de Jean Dupond
 
+On peut le représenter comme cela :
+
      Transaction 1
     +------------------------------------------------------+
     |                                                      |
